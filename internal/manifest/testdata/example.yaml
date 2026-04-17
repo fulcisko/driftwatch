@@ -1,0 +1,10 @@
+# Example manifest used for documentation and manual testing.
+name: example-service
+version: "0.1.0"
+namespace: staging
+image: example-service:0.1.0
+replicas: 2
+env:
+  LOG_LEVEL: debug
+  PORT: "9090"
+  FEATURE_FLAGS: "new-ui,beta-api"
