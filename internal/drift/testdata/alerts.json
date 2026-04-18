@@ -1,0 +1,16 @@
+[
+  {
+    "service": "api",
+    "key": "db_password",
+    "severity": "high",
+    "message": "drift detected: db_password changed from \"old\" to \"new\"",
+    "timestamp": "2024-01-15T10:00:00Z"
+  },
+  {
+    "service": "api",
+    "key": "log_level",
+    "severity": "low",
+    "message": "drift detected: log_level changed from \"info\" to \"debug\"",
+    "timestamp": "2024-01-15T10:00:00Z"
+  }
+]
