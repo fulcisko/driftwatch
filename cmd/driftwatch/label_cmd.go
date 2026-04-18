@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/user/driftwatch/internal/drift"
 )
@@ -46,18 +45,14 @@ func runLabelFilter(args []string) error {
 	if len(args) < 2 {
 		return fmt.Errorf("usage: label filter <key> <value>")
 	}
-	manifestDir := envOr("DRIFTWATCH_MANIFEST_DIR", "manifests")
-	sourceURL := envOr("DRIFTWATCH_SOURCE_URL", "")
-	if sourceURL == "" {
-		return fmt.Errorf("DRIFTWATCH_SOURCE_URL is required")
-	}
-	_ = manifestDir
-	_ = strconv.Itoa(0) // suppress unused import
-
 	labelPath := envOr("DRIFTWATCH_LABEL_PATH", "labels.json")
 	labels, err := drift.LoadLabels(labelPath)
 	if err != nil {
 		return err
+	}
+	sourceURL := envOr("DRIFTWATCH_SOURCE_URL", "")
+	if sourceURL == "" {
+		return fmt.Errorf("DRIFTWATCH_SOURCE_URL is required")
 	}
 	// Placeholder: in full impl, load results then filter
 	for svc, kv := range labels {
