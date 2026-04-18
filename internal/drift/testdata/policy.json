@@ -1,0 +1,8 @@
+{
+  "name": "default",
+  "rules": [
+    {"key": "env", "severity": "high", "required": true, "allowed": ["prod", "staging"]},
+    {"key": "replicas", "severity": "medium", "allowed": ["2", "3", "4"]},
+    {"key": "log_level", "severity": "low", "allowed": ["info", "warn", "error"]}
+  ]
+}
