@@ -18,6 +18,13 @@ func writePolicyJSON(t *testing.T, p drift.Policy) string {
 	return path
 }
 
+func writeManifestYAML(t *testing.T, dir, filename, content string) {
+	t.Helper()
+	if err := os.WriteFile(filepath.Join(dir, filename), []byte(content), 0644); err != nil {
+		t.Fatalf("failed to write manifest %s: %v", filename, err)
+	}
+}
+
 func TestRunPolicyCheck_MissingArgs(t *testing.T) {
 	err := runPolicyCheck([]string{"only-one"})
 	if err == nil {
@@ -39,8 +46,7 @@ func TestRunPolicyCheck_NoPolicyViolations(t *testing.T) {
 		Rules: []drift.PolicyRule{{Key: "env", Allowed: []string{"prod"}}},
 	})
 	manifestDir := t.TempDir()
-	yaml := "name: svc-a\nconfig:\n  env: prod\n"
-	os.WriteFile(filepath.Join(manifestDir, "svc-a.yaml"), []byte(yaml), 0644)
+	writeManifestYAML(t, manifestDir, "svc-a.yaml", "name: svc-a\nconfig:\n  env: prod\n")
 
 	// source URL unreachable — fetcher will warn and skip, no results => no violations
 	err := runPolicyCheck([]string{manifestDir, "http://127.0.0.1:19999", policyPath})
