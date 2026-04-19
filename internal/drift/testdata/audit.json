@@ -1,0 +1,16 @@
+[
+  {
+    "timestamp": "2024-06-01T10:00:00Z",
+    "action": "save-baseline",
+    "service": "svc-api",
+    "user": "alice",
+    "detail": "initial baseline saved"
+  },
+  {
+    "timestamp": "2024-06-02T11:30:00Z",
+    "action": "diff",
+    "service": "svc-api",
+    "user": "bob",
+    "detail": "drift detected on key: replicas"
+  }
+]
