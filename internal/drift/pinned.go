@@ -69,7 +69,10 @@ func LoadPins(path string) (PinList, error) {
 		return list, nil
 	}
 	err = json.Unmarshal(data, &list)
-	return list, err
+	if err != nil {
+		return list, fmt.Errorf("failed to parse pin file %q: %w", path, err)
+	}
+	return list, nil
 }
 
 // ApplyPins filters out diffs where the live value matches the pinned expected value.
