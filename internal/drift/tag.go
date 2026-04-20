@@ -16,6 +16,8 @@ type TagStore struct {
 	Tags []Tag `json:"tags"`
 }
 
+// AddTag adds a service to the named tag, creating the tag if it does not exist.
+// If the service is already associated with the tag, it is a no-op.
 func AddTag(path, tagName, service string) error {
 	store, _ := LoadTags(path)
 	for i, t := range store.Tags {
@@ -34,6 +36,8 @@ func AddTag(path, tagName, service string) error {
 	return saveTags(path, store)
 }
 
+// RemoveTag removes a service from the named tag.
+// Returns an error if the tag does not exist.
 func RemoveTag(path, tagName, service string) error {
 	store, err := LoadTags(path)
 	if err != nil {
@@ -54,10 +58,15 @@ func RemoveTag(path, tagName, service string) error {
 	return errors.New("tag not found")
 }
 
+// LoadTags reads and parses the tag store from the given file path.
+// If the file does not exist, an empty TagStore is returned without error.
 func LoadTags(path string) (TagStore, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
-		return TagStore{}, nil
+		if errors.Is(err, os.ErrNotExist) {
+			return TagStore{}, nil
+		}
+		return TagStore{}, err
 	}
 	var store TagStore
 	if err := json.Unmarshal(data, &store); err != nil {
@@ -66,6 +75,8 @@ func LoadTags(path string) (TagStore, error) {
 	return store, nil
 }
 
+// FilterByTag returns the list of services associated with the given tag name.
+// Returns nil if the tag does not exist.
 func FilterByTag(store TagStore, tagName string) []string {
 	for _, t := range store.Tags {
 		if t.Name == tagName {
