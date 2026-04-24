@@ -7,6 +7,8 @@ import (
 	"github.com/user/driftwatch/internal/drift"
 )
 
+// runAuditAppend records a new audit event to the log file at the given path.
+// Arguments: <path> <action> <service> <user> [detail]
 func runAuditAppend(args []string) error {
 	if len(args) < 4 {
 		return fmt.Errorf("usage: audit append <path> <action> <service> <user> [detail]")
@@ -26,6 +28,9 @@ func runAuditAppend(args []string) error {
 	return nil
 }
 
+// runAuditShow loads and displays audit log entries from the given path,
+// optionally filtering by service and action.
+// Arguments: <path> [service] [action]
 func runAuditShow(args []string) error {
 	if len(args) < 1 {
 		return fmt.Errorf("usage: audit show <path> [service] [action]")
@@ -44,6 +49,10 @@ func runAuditShow(args []string) error {
 		return fmt.Errorf("load audit log: %w", err)
 	}
 	filtered := drift.FilterAuditLog(events, service, action)
+	if len(filtered) == 0 {
+		fmt.Fprintln(os.Stdout, "no audit events found")
+		return nil
+	}
 	fmt.Print(drift.FormatAuditLog(filtered))
 	return nil
 }
