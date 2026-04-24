@@ -66,3 +66,12 @@ func TestSortResults_DoesNotMutateOriginal(t *testing.T) {
 		t.Error("original slice was mutated")
 	}
 }
+
+func TestSortResults_EmptySlice(t *testing.T) {
+	results := []CompareResult{}
+	sorted := SortResults(results, SortByService)
+
+	if len(sorted) != 0 {
+		t.Errorf("expected empty slice, got %d elements", len(sorted))
+	}
+}
