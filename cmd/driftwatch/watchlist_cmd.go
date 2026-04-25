@@ -11,6 +11,8 @@ import (
 
 const defaultWatchlistPath = "watchlist.json"
 
+// runWatchlistAdd adds a service with a drift threshold to the watchlist.
+// Usage: driftwatch watchlist add <service> <threshold>
 func runWatchlistAdd(args []string) error {
 	if len(args) < 2 {
 		return fmt.Errorf("usage: driftwatch watchlist add <service> <threshold>")
@@ -27,6 +29,8 @@ func runWatchlistAdd(args []string) error {
 	return nil
 }
 
+// runWatchlistRemove removes a service from the watchlist.
+// Usage: driftwatch watchlist remove <service>
 func runWatchlistRemove(args []string) error {
 	if len(args) < 1 {
 		return fmt.Errorf("usage: driftwatch watchlist remove <service>")
@@ -39,6 +43,7 @@ func runWatchlistRemove(args []string) error {
 	return nil
 }
 
+// runWatchlistShow prints all entries in the watchlist as a formatted table.
 func runWatchlistShow(_ []string) error {
 	wl, err := drift.LoadWatchlist(defaultWatchlistPath)
 	if err != nil {
