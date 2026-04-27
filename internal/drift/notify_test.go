@@ -94,3 +94,16 @@ func TestGenerateNotifyEvents_NoRules(t *testing.T) {
 	}
 	_ = os.Getenv("CI")
 }
+
+func TestGenerateNotifyEvents_MultipleRules(t *testing.T) {
+	// Verify that multiple rules each produce their own events independently.
+	rules := []NotifyRule{
+		{Channel: ChannelSlack, Target: "#alerts", MinSeverity: "high"},
+		{Channel: ChannelEmail, Target: "ops@example.com", MinSeverity: "low"},
+	}
+	events := GenerateNotifyEvents(makeNotifyResults(), rules)
+	// high rule: 1 event (auth); low rule: 2 events (auth, worker) => 3 total
+	if len(events) != 3 {
+		t.Fatalf("expected 3 events, got %d", len(events))
+	}
+}
