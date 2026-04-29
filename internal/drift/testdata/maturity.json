@@ -1,0 +1,24 @@
+{
+  "entries": [
+    {
+      "service": "auth-service",
+      "level": "mature",
+      "drift_score": 0,
+      "assessed_at": "2024-06-01T10:00:00Z"
+    },
+    {
+      "service": "payment-service",
+      "level": "developing",
+      "drift_score": 12.5,
+      "assessed_at": "2024-06-01T10:00:00Z",
+      "note": "multiple env config mismatches"
+    },
+    {
+      "service": "legacy-api",
+      "level": "unstable",
+      "drift_score": 28.0,
+      "assessed_at": "2024-06-01T10:00:00Z",
+      "note": "critical key drift detected"
+    }
+  ]
+}
