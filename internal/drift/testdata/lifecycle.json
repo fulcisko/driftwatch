@@ -1,0 +1,16 @@
+{
+  "entries": [
+    {
+      "service": "auth-service",
+      "stage": "active",
+      "updated_at": "2024-06-01T10:00:00Z",
+      "note": "production ready"
+    },
+    {
+      "service": "legacy-api",
+      "stage": "deprecated",
+      "updated_at": "2024-05-15T08:30:00Z",
+      "note": "migrate to v2"
+    }
+  ]
+}
